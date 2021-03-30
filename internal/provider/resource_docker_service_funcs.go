@@ -913,14 +913,17 @@ func createContainerSpec(v interface{}) (*swarm.ContainerSpec, error) {
 
 				for _, rawSecret := range value.(*schema.Set).List() {
 					rawSecret := rawSecret.(map[string]interface{})
-					rawFilemode := rawSecret["file_mode"].(int)
+					fileMode, err := convertStrToFileMode(rawSecret["file_mode"].(string))
+					if err != nil {
+						return nil, fmt.Errorf("secrets.file_mode is invalid: %w", err)
+					}
 					secret := swarm.SecretReference{
 						SecretID: rawSecret["secret_id"].(string),
 						File: &swarm.SecretReferenceFileTarget{
 							Name: rawSecret["file_name"].(string),
 							UID:  rawSecret["file_uid"].(string),
 							GID:  rawSecret["file_gid"].(string),
-							Mode: os.FileMode(uint32(rawFilemode)),
+							Mode: fileMode,
 						},
 					}
 					if value, ok := rawSecret["secret_name"]; ok {
@@ -935,14 +938,17 @@ func createContainerSpec(v interface{}) (*swarm.ContainerSpec, error) {
 
 				for _, rawConfig := range value.(*schema.Set).List() {
 					rawConfig := rawConfig.(map[string]interface{})
-					rawFilemode := rawConfig["file_mode"].(int)
+					fileMode, err := convertStrToFileMode(rawConfig["file_mode"].(string))
+					if err != nil {
+						return nil, fmt.Errorf("configs.file_mode is invalid: %w", err)
+					}
 					config := swarm.ConfigReference{
 						ConfigID: rawConfig["config_id"].(string),
 						File: &swarm.ConfigReferenceFileTarget{
 							Name: rawConfig["file_name"].(string),
 							UID:  rawConfig["file_uid"].(string),
 							GID:  rawConfig["file_gid"].(string),
-							Mode: os.FileMode(uint32(rawFilemode)),
+							Mode: fileMode,
 						},
 					}
 					if value, ok := rawConfig["config_name"]; ok {

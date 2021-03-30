@@ -329,7 +329,7 @@ func flattenServiceSecrets(in []*swarm.SecretReference) *schema.Set {
 			if len(v.File.GID) > 0 {
 				m["file_gid"] = v.File.GID
 			}
-			m["file_mode"] = int(v.File.Mode)
+			m["file_mode"] = convertFileModeToStr(v.File.Mode)
 		}
 		out[i] = m
 	}
@@ -356,7 +356,7 @@ func flattenServiceConfigs(in []*swarm.ConfigReference) *schema.Set {
 			if len(v.File.GID) > 0 {
 				m["file_gid"] = v.File.GID
 			}
-			m["file_mode"] = int(v.File.Mode)
+			m["file_mode"] = convertFileModeToStr(v.File.Mode)
 		}
 		out[i] = m
 	}
