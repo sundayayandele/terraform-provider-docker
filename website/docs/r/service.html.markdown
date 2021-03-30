@@ -150,7 +150,7 @@ resource "docker_service" "foo" {
         file_name   = "/secrets.json"
         file_uid    = "0"
         file_gid    = "0"
-        file_mode   = 0777
+        file_mode   = "0777"
       }
 
       secrets {
@@ -418,7 +418,7 @@ the extra mount mappings for the container. Each `secrets` block is a reference 
 * `file_name` - (Required, string) Represents the final filename in the filesystem. The specific target file that the secret data is written within the docker container, e.g. `/root/secret/secret.json`
 * `file_uid` - (Optional, string) Represents the file UID. Defaults: `0`
 * `file_gid` - (Optional, string) Represents the file GID. Defaults: `0`
-* `file_mode` - (Optional, int) Represents the FileMode of the file. Defaults: `0444`
+* `file_mode` - (Optional, string) Represents the FileMode of the file. Defaults: `0444`
 
 <a id="configs-1"></a>
 ### Configs
@@ -431,7 +431,7 @@ the extra mount mappings for the container. Each `configs` is a reference to a s
 * `file_name` - (Required, string) Represents the final filename in the filesystem. The specific target file that the config data is written within the docker container, e.g. `/root/config/config.json`
 * `file_uid` - (Optional, string) Represents the file UID. Defaults: `0`
 * `file_gid` - (Optional, string) Represents the file GID. Defaults: `0`
-* `file_mode` - (Optional, int) Represents the FileMode of the file. Defaults: `0444`
+* `file_mode` - (Optional, string) Represents the FileMode of the file. Defaults: `0444`
 
 <!-- end task-container-spec -->
 
