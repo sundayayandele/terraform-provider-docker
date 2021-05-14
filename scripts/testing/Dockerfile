@@ -1,4 +1,4 @@
-FROM node:6.12.3-slim
+FROM node:16.1.0-slim
 
 ARG JS_FILE_PATH
 
